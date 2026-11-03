@@ -36,4 +36,18 @@ class Checkouts
     {
         return $this->client->get('/checkouts', $filters);
     }
+
+    /**
+     * Actualiza un checkout abierto (items, success_url, cancel_url, metadata,
+     * expires_at, discount_code).
+     *
+     * @param  array<string,mixed>|CheckoutData  $data
+     * @return array<string,mixed>
+     */
+    public function update(string $id, array|CheckoutData $data, ?string $idempotencyKey = null): array
+    {
+        $payload = $data instanceof CheckoutData ? $data->toArray() : $data;
+
+        return $this->client->patch("/checkouts/{$id}", $payload, $idempotencyKey ? ['Idempotency-Key' => $idempotencyKey] : []);
+    }
 }

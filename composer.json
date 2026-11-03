@@ -2,20 +2,34 @@
     "name": "arrendales/recurrente-laravel",
     "description": "SDK no oficial de Recurrente (pasarela de pagos de Guatemala) para Laravel: checkouts, suscripciones, productos y verificación de webhooks.",
     "type": "library",
-    "version": "1.0.0",
     "license": "MIT",
-    "keywords": ["recurrente", "laravel", "payments", "guatemala", "checkout", "subscriptions", "webhooks"],
-    "authors": [
-        { "name": "ArrendaLes" }
+    "homepage": "https://github.com/L2Ernestoo/recurrente-laravel",
+    "keywords": [
+        "recurrente",
+        "laravel",
+        "payments",
+        "guatemala",
+        "checkout",
+        "subscriptions",
+        "webhooks"
     ],
+    "authors": [
+        {
+            "name": "ArrendaLes"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/L2Ernestoo/recurrente-laravel/issues",
+        "source": "https://github.com/L2Ernestoo/recurrente-laravel"
+    },
     "require": {
         "php": "^8.2",
-        "illuminate/support": "^11.0|^12.0",
-        "illuminate/http": "^11.0|^12.0"
+        "illuminate/support": "^11.0|^12.0|^13.0",
+        "illuminate/http": "^11.0|^12.0|^13.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^9.0|^10.0",
-        "phpunit/phpunit": "^11.0"
+        "orchestra/testbench": "^9.0|^10.0|^11.0",
+        "phpunit/phpunit": "^11.5|^12.0"
     },
     "autoload": {
         "psr-4": {
@@ -26,6 +40,9 @@
         "psr-4": {
             "Recurrente\\Laravel\\Tests\\": "tests/"
         }
+    },
+    "scripts": {
+        "test": "phpunit"
     },
     "extra": {
         "laravel": {

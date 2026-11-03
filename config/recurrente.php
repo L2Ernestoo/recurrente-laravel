@@ -15,6 +15,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Cuenta conectada (opcional)
+    |--------------------------------------------------------------------------
+    | Si se define, todas las peticiones del cliente por defecto se envían con
+    | el header X-ACCOUNT-ID. Para cambiarla por petición usa
+    | Recurrente::forAccount('ac_...').
+    */
+    'account_id' => env('RECURRENTE_ACCOUNT_ID'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Endpoint base de la API
     |--------------------------------------------------------------------------
     */
