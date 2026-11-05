@@ -18,12 +18,7 @@ class Products
      */
     public function create(array $data): array
     {
-        // Si el caller no envolvió en "product", lo envolvemos por conveniencia.
-        if (! isset($data['product'])) {
-            $data = ['product' => $data];
-        }
-
-        return $this->client->post('/products', $data);
+        return $this->client->post('/products', $this->wrap($data));
     }
 
     /**
@@ -65,9 +60,40 @@ class Products
         return $this->client->get("/products/{$id}");
     }
 
+    /**
+     * @param  array<string,mixed>  $filters  page, items
+     * @return array<string,mixed>
+     */
+    public function list(array $filters = []): array
+    {
+        return $this->client->get('/products', $filters);
+    }
+
+    /**
+     * Actualiza un producto (PUT). Igual que create(), envuelve en "product"
+     * si el caller no lo hizo.
+     *
+     * @param  array<string,mixed>  $data
+     * @return array<string,mixed>
+     */
+    public function update(string $id, array $data): array
+    {
+        return $this->client->put("/products/{$id}", $this->wrap($data));
+    }
+
     /** @return array<string,mixed> */
     public function delete(string $id): array
     {
         return $this->client->delete("/products/{$id}");
+    }
+
+    /**
+     * @param  array<string,mixed>  $data
+     * @return array<string,mixed>
+     */
+    protected function wrap(array $data): array
+    {
+        // Si el caller no envolvió en "product", lo envolvemos por conveniencia.
+        return isset($data['product']) ? $data : ['product' => $data];
     }
 }

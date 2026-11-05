@@ -2,6 +2,8 @@
 
 namespace Recurrente\Laravel\Webhooks;
 
+use Illuminate\Http\Request;
+
 /**
  * Verifica la autenticidad de un webhook de Recurrente.
  *
@@ -17,21 +19,33 @@ class WebhookVerifier
         protected string $scheme = 'svix',
         protected string $signatureHeader = 'X-Recurrente-Signature',
         protected int $tolerance = 300,
+        protected ?string $secret = null,
     ) {}
 
     /**
      * @param  string  $payload  Cuerpo crudo del request (json string sin modificar)
      * @param  array<string,string|array<int,string>>  $headers  Headers normalizados (case-insensitive)
+     * @param  string|null  $secret  Si es null se usa el configurado (recurrente.webhook_secret)
      */
-    public function verify(string $payload, array $headers, string $secret): bool
+    public function verify(string $payload, array $headers, ?string $secret = null): bool
     {
-        if ($secret === '') {
+        $secret ??= $this->secret;
+
+        if ($secret === null || $secret === '') {
             return false;
         }
 
-        return $this->scheme === 'svix'
+        return strtolower($this->scheme) === 'svix'
             ? $this->verifySvix($payload, $headers, $secret)
             : $this->verifyHmac($payload, $headers, $secret);
+    }
+
+    /**
+     * Atajo para verificar directamente un Request de Laravel.
+     */
+    public function verifyRequest(Request $request, ?string $secret = null): bool
+    {
+        return $this->verify($request->getContent(), $request->headers->all(), $secret);
     }
 
     // ── Esquemas ────────────────────────────────────────────────────────────
