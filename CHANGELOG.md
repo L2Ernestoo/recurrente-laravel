@@ -2,7 +2,7 @@
 
 Todas las versiones siguen [SemVer](https://semver.org/lang/es/). Los cambios de una versión menor (1.x) son compatibles hacia atrás.
 
-## [1.1.0] - 2026-11-03
+## [1.1.0] - 2026-11-05
 
 Alinea el paquete con la [API actual de Recurrente](https://docs.recurrente.com). **Sin cambios incompatibles**: el código escrito para 1.0 sigue funcionando igual.
 
@@ -32,6 +32,9 @@ Alinea el paquete con la [API actual de Recurrente](https://docs.recurrente.com)
 ### Deprecado (se mantiene en 1.x, cambia en 2.0)
 - `customers()->create()`: crea un usuario (`POST /users`). Usa `createCustomer()` o `users()->create()`.
 - `WebhookEvent::isSubscriptionCreated()` / `isSubscriptionCancelled()`: nunca coincidían con los eventos reales (`subscription.create` / `subscription.cancel`). Usa `isSubscriptionStarted()` / `isSubscriptionEnded()`.
+
+### Nota sobre Laravel 11
+- Se sigue aceptando Laravel 11, pero ya no recibe parches de seguridad: Composer bloquea por defecto todas sus versiones por avisos sin corregir. Se recomienda actualizar las apps a Laravel 12 o 13.
 
 ### Sin cambios a propósito
 - `isPaymentCompleted()` / `isPaymentFailed()` siguen detectando solo el formato legacy. Agregarles `intent.*` haría que las cuentas que reciben ambos formatos procesaran cada cobro dos veces. Ver la sección "Formatos de evento" del README.
